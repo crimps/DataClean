@@ -93,5 +93,4 @@ public class DBUtil {
     public static void connection(String[] args) throws Exception {
         System.out.println(getConnection());
     }
-
 }
