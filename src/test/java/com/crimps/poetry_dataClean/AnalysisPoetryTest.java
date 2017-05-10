@@ -1,5 +1,6 @@
 package com.crimps.poetry_dataClean;
 
+import com.crimps.poetry_dataClean.AnalysisPoetry;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

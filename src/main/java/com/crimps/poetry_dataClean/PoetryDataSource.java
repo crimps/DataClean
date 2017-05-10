@@ -33,33 +33,6 @@ public class PoetryDataSource {
      * 简单查询
      * @param sql 简单查询语句
      * @return
-     */
-    public ResultSet getResultBySimpleSql(String sql) {
-        try {
-            connection = DBUtil.getConnection();
-            statement = connection.createStatement();
-            return statement.executeQuery(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (null != statement) {
-                try {
-                    statement.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (null != connection) {
-                DBUtil.closeConnection(connection);
-            }
-        }
-    }
-
-    /**
-     * 简单查询
-     * @param sql 简单查询语句
-     * @return
      * @throws Exception
      */
     public List<Map<String, String>> getMapBySimpleSql(String sql) throws Exception{

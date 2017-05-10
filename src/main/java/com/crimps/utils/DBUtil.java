@@ -1,8 +1,7 @@
 package com.crimps.utils;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 import java.util.Properties;
 
 /**
@@ -18,6 +17,9 @@ public class DBUtil {
 
     public static String driver;
 
+    private static Connection connection = null;
+    private static Statement statement = null;
+
     // 静态块
     static {
         try {
@@ -27,7 +29,7 @@ public class DBUtil {
              * 这种写法是将来更加推荐的相对路径 写法。
              */
             InputStream is = DBUtil.class.getClassLoader().getResourceAsStream(
-                    "com/crimps/utils/db.properties");
+                    "db.properties");
 
             prop.load(is);
             is.close();
@@ -92,5 +94,32 @@ public class DBUtil {
      */
     public static void connection(String[] args) throws Exception {
         System.out.println(getConnection());
+    }
+
+    /**
+     * 简单查询
+     * @param sql 简单查询语句
+     * @return
+     */
+    public static ResultSet getResultBySimpleSql(String sql) {
+        try {
+            connection = DBUtil.getConnection();
+            statement = connection.createStatement();
+            return statement.executeQuery(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (null != statement) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != connection) {
+                DBUtil.closeConnection(connection);
+            }
+        }
     }
 }
